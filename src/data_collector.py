@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup
+import time
 
 # GitHub personal access token
 GITHUB_TOKEN = "" # please put your token here!
@@ -73,7 +74,7 @@ def analyse_repositories(search_term):
             if repo_name in repo_names_set:  # skip if already added
                 continue
             
-            # add repo_name to the set to eliminate duplicates
+            # adding repo_name to the set to eliminate duplicates
             repo_names_set.add(repo_name)
             
             # fetching the repository details to get additional metrics
@@ -124,6 +125,60 @@ def analyse_repositories(search_term):
     return repos
 
 
+# all ZKP languages/zkVMs and their search terms
+zkp_languages = {
+    "Circom": "filename:.circom",
+    "ZoKrates": "filename:.zok", 
+    "Noir": "filename:nargo.toml",
+    "Cairo": "filename:scarb.toml",
+    "Leo": "filename:.leo",
+    "Nexus": "nexus_rt",
+    "Risc0": "risc0-build", 
+    "SnarkVM": "snarkvm",
+    "SP1": "SP1_zkvm",
+    "Jolt": "jolt-sdk"
+}
+
+# function to collect data for all predefined ZKP languages
+# (creates CSV files in the metrics folder)
+def collect_all_zkp_data():    
+    # creating metrics folder
+    import os
+    folder = "../metrics"
+    os.makedirs(folder, exist_ok=True)
+
+    # collecting data for all languages
+    for language_name, search_term in zkp_languages.items():
+        print(f"\n{'='*50}")
+        print(f"Collecting data for {language_name} (search: {search_term})")
+        print(f"{'='*50}")
+        
+        repositories = analyse_repositories(search_term)
+        
+        # adding a small delay between API calls to respect rate limits
+        time.sleep(2)
+        
+        if repositories:
+            # converting the data into a sorted DataFrame
+            df = pd.DataFrame(repositories)
+            
+            # sorting in descending order
+            df = df.sort_values(by="Stars", ascending=False)
+            
+            # saving the DataFrame to a CSV file in the metrics folder
+            filename = f"{folder}/metrics_for_{language_name}.csv"
+            df.to_csv(filename, index=False)
+            
+            print(f"✅ Data for {language_name}: {len(repositories)} repositories saved to {filename}")
+        else:
+            print(f"❌ No repositories found for {language_name}")
+
+    print(f"\n🎉 Data collection completed! All files saved in {folder}/")
+    print("Files created:")
+    for language_name in zkp_languages.keys():
+        print(f"  - metrics_for_{language_name}.csv")
+
+# manual input version to provide own query
 # fetching the repositories and their metrics
 search_term = input("Enter search term: ")
 repositories = analyse_repositories(search_term)
@@ -136,3 +191,6 @@ df = df.sort_values(by="Stars", ascending=False)  # sorting in descending order
 df.to_csv(f"../metrics/metrics_for_{search_term}.csv", index=False)
 
 print(f"Data has been written to metrics_for_{search_term}.csv")
+
+# Uncomment the line below to run the automated collection for the predefined ZKP languages:
+# collect_all_zkp_data()
