@@ -36,7 +36,7 @@ This study covers the following ZKP languages:
 
 ## Visualizations
 
-Graphs are provided to illustrate:
+Figures are provided to illustrate:
 
 - Number of repositories with more than 1 star for each language.
 - Number of repositories updated after 1 January 2024 for each language.
@@ -81,7 +81,7 @@ The analysis revealed the following key insights:
 
 ## Repository Structure
 
-- **`graphs/`**  
+- **`figures/`**  
   Contains visualizations of the study in `.png` format.
 - **`metrics/`**  
   Contains `.csv` files with detailed metrics for each language.
