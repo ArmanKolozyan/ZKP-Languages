@@ -20,7 +20,7 @@ This study covers the following ZKP languages:
 
 | Name          | Type |
 | ------------- | ---- |
-| **Circom**    | HDL  |
+| **Circom**    | DSL  |
 | **ZoKrates**  | DSL  |
 | **Noir**      | DSL  |
 | **Cairo**     | DSL  |
@@ -31,7 +31,6 @@ This study covers the following ZKP languages:
 | **SP1**       | zkVM |
 | **Jolt**      | zkVM |
 
-- **HDL**: Hardware Description Language, used for circuit descriptions.
 - **DSL**: Domain-Specific Language, designed specifically for writing ZKP programs.
 - **zkVM**: Zero-Knowledge Virtual Machine, a virtual machine designed to execute programs written in standard programming languages while generating zero-knowledge proofs of their correctness.
 
