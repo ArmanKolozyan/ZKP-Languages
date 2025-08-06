@@ -76,10 +76,10 @@ The study utilized GitHub's API to search for repositories. Below are the specif
 
 The analysis revealed the following key insights:
 
-- **Circom** appears to be the most popular ZKP language, likely due to its strong performance and optimization capabilities for building circuits.
-- **Cairo** stands out as the most widely adopted zkVM, most likely because it was released early and powers *StarkNet*, a popular Layer-2 scaling solution on Ethereum.
-- **zkVMs** have seen great usage from 2024, surpassing Circom in growth trends, indicating a shift toward virtual machine-based ZKP solutions. This shift likely reflects the growing preference for zkVMs, which offer greater usability by enabling developers to write general-purpose programs rather than focusing on low-level circuit design.
-- **ZoKrates** shows very limited usage, likely due to its comparatively lower performance and stagnated development (with the last commit recorded in April 2024).
+- **Circom** appears to be the most popular ZKP language, likely due to its strong performance and optimization capabilities. **Cairo** is also gaining significant traction, which aligns with its role as the core language of StarkNet.
+- **RISC Zero** stands out as the most widely adopted zkVM, most likely because it is formally verified and contains strong developer tooling.
+- **zkVMs** have seen great usage from 2024, surpassing Circom in growth trends. This shift is mainly due to their usability. Developers no longer need to manually write circuits; instead, they can write "standard code" and rely on the underlying VM to generate the necessary proofs. However, when performance is critical, Circom remains the preferred choice due to its low-level control.
+- **ZoKrates** shows very limited usage, likely due to its relatively lower performance and stagnated development (with the last commit recorded in April 2024).
 
 ## Repository Structure
 
@@ -91,7 +91,7 @@ The analysis revealed the following key insights:
 - **`src/`**  
   Contains source files for data collection and analysis:
 
-  - `data_analyzer.ipynb`: Jupyter notebook for analysing and visualizing data.
+  - `data_analyzer.ipynb`: Jupyter notebook for analyzing and visualizing data.
   - `data_collector.py`: Python script for fetching data using the GitHub API.
   - `requirements.txt`: Lists Python dependencies required for running the project.
 
