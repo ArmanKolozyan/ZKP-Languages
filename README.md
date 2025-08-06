@@ -38,11 +38,13 @@ This study covers the following ZKP languages:
 
 Figures are provided to illustrate:
 
-- Number of repositories with more than 1 star for each language.
-- Number of repositories updated after 1 January 2024 for each language.
-- Number of repositories with more than 10 total issues for each language.
-- Percentage of Circom VS ZoKrates VS Noir programs.
-- Comparison of the total number of repositories across all zkVMs VS Circom.
+- Number of repositories with more than 1 star for each language (with DSL/zkVM distinction).
+- Combined repository activity chart showing total repositories with recently updated ones highlighted.
+- Number of repositories updated after 1 January 2024 for each language (with DSL/zkVM distinction).
+- Number of repositories with more than 10 total issues for each language (with DSL/zkVM distinction).
+- Percentage distribution of all DSL repositories.
+- Percentage distribution of all zkVM repositories.
+- Comparison of repository counts: Circom vs zkVMs.
 
 ## GitHub API Search Queries
 
