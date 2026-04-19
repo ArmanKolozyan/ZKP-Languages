@@ -49,7 +49,7 @@ def get_number_of_contributors(repo_name):
 #   instead of 'path'! 
 #   For more details, see: https://github.com/orgs/community/discussions/64618#discussioncomment-8473570
 def analyse_repositories(search_term):
-    url = f"{GITHUB_API_URL}/search/code?q={search_term}&per_page=50"
+    url = f"{GITHUB_API_URL}/search/code?q={search_term}&per_page=100"
     repos = [] # result
     repo_names_set = set()  # to keep track of unique repository names
     page = 0
@@ -57,7 +57,18 @@ def analyse_repositories(search_term):
     while True:
         
         response = requests.get(url + f"&page={page}", headers=headers)
-        
+
+        # GitHub returns 422 when hitting the 1000-result cap
+        if response.status_code == 422:
+            print(f"Reached GitHub code search result limit (1000 results) at page {page}.")
+            break
+
+        # 404 means rate limited: wait and retry
+        if response.status_code == 404:
+            print(f"Rate limited at page {page}, waiting 60s before retrying...")
+            time.sleep(60)
+            continue
+
         # checking if the response is successful
         if response.status_code != 200:
             print(f"Error: Received status code {response.status_code}")
@@ -125,6 +136,9 @@ def analyse_repositories(search_term):
             print("no next anymore")
             break
         page += 1
+
+        # respecting the code search rate limit (10 requests per minute)
+        time.sleep(8)
 
     return repos
 
