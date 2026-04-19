@@ -1,6 +1,6 @@
 import requests
 import pandas as pd
-from bs4 import BeautifulSoup
+
 import time
 import os
 
@@ -18,31 +18,28 @@ headers = {
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 METRICS_FOLDER = os.path.join(SCRIPT_DIR, "..", "metrics")
 
-# helper function to scrape the number of contributors from a GitHub repository page
+# helper function to get the number of contributors via the GitHub API
 def get_number_of_contributors(repo_name):
     try:
-        url = f"https://github.com/{repo_name}"
-        response = requests.get(url)
-        
+        url = f"{GITHUB_API_URL}/repos/{repo_name}/contributors?per_page=1&anon=true"
+        response = requests.get(url, headers=headers)
+
         if response.status_code != 200:
-            print(f"Failed to access {url}")
+            print(f"Failed to get contributors for {repo_name}")
             return 0
 
-        soup = BeautifulSoup(response.content, "html.parser")
-        
-        # looking for the element that contains the number of contributors
-        contributors_element = soup.find("a", href=f"/{repo_name}/graphs/contributors")
-        
-        if contributors_element:
-            # extracting the number of contributors from the text
-            contributors_text = contributors_element.get_text(strip=True)
-            digits = "".join(filter(str.isdigit, contributors_text))
-            return int(digits) if digits else 1
-        else:
-            return 1
-        
+        # if there are multiple pages, the last page number equals the contributor count
+        # (because per_page=1, so each page has exactly one contributor)
+        link_header = response.headers.get("Link", "")
+        if 'rel="last"' in link_header:
+            last_page = int(link_header.split("page=")[-1].split(">")[0])
+            return last_page
+
+        # if no pagination, all contributors fit on one page
+        return len(response.json())
+
     except Exception as e:
-        print(f"Error scraping contributors for {repo_name}: {e}")
+        print(f"Error getting contributors for {repo_name}: {e}")
         return 0
     
 
