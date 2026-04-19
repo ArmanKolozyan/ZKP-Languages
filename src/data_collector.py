@@ -135,7 +135,7 @@ zkp_languages = {
     "ZoKrates": "filename:.zok", 
     "Noir": "filename:nargo.toml",
     "Cairo": "filename:scarb.toml",
-    "Leo": "filename:.leo",
+    "Leo": "filename:program.json .aleo",
     "Nexus": "nexus_rt",
     "Risc0": "risc0-build", 
     "SnarkVM": "snarkvm",
