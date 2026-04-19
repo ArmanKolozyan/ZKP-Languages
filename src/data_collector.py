@@ -98,7 +98,7 @@ def analyse_repositories(search_term):
                     link_header = issues_response.headers.get("Link")
                     if link_header and 'rel="last"' in link_header:
                         last_page = int(link_header.split("page=")[-1].split(">")[0])
-                        total_issues_count = last_page # since per_page=1
+                        total_issues_count = last_page # since per_page=50
                     else:
                         total_issues_count = len(issues_response.json())
                 else:
