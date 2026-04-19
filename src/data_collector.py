@@ -178,19 +178,6 @@ def collect_all_zkp_data():
     for language_name in zkp_languages.keys():
         print(f"  - metrics_for_{language_name}.csv")
 
-# manual input version to provide own query
-# fetching the repositories and their metrics
-search_term = input("Enter search term: ")
-repositories = analyse_repositories(search_term)
 
-# converting the data into a sorted DataFrame
-df = pd.DataFrame(repositories)
-df = df.sort_values(by="Stars", ascending=False)  # sorting in descending order
-
-# saving the DataFrame to a CSV file
-df.to_csv(f"../metrics/metrics_for_{search_term}.csv", index=False)
-
-print(f"Data has been written to metrics_for_{search_term}.csv")
-
-# Uncomment the line below to run the automated collection for the predefined ZKP languages:
-# collect_all_zkp_data()
+if __name__ == "__main__":
+    collect_all_zkp_data()
