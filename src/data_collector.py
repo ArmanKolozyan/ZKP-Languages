@@ -111,9 +111,9 @@ def analyse_repositories(search_term):
                         total_issues_count = len(issues_response.json())
                 else:
                     total_issues_count = 0
-
-                # scraping the number of contributors via helper function
-                num_contributors = get_number_of_contributors(repo_name)
+                
+                # getting the number of contributors via helper function
+                # num_contributors = get_number_of_contributors(repo_name)    
 
                 # formatting the last updated datetime to only include the date
                 last_updated = repo_data.get("updated_at", "N/A").split("T")[0]
@@ -127,8 +127,8 @@ def analyse_repositories(search_term):
                     "Total Issues": total_issues_count,
                     "Created At": created_at,
                     "Last Updated": last_updated,
-                    "Primary Language": repo_data.get("language", "N/A"),
-                    "Contributors": num_contributors
+                    "Primary Language": repo_data.get("language", "N/A")
+                   # "Contributors": num_contributors
                 })
 
         # checking if there are more pages
