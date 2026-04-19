@@ -36,8 +36,8 @@ def get_number_of_contributors(repo_name):
         if contributors_element:
             # extracting the number of contributors from the text
             contributors_text = contributors_element.get_text(strip=True)
-            contributors_number = int("".join(filter(str.isdigit, contributors_text)))
-            return contributors_number
+            digits = "".join(filter(str.isdigit, contributors_text))
+            return int(digits) if digits else 1
         else:
             return 1
         
