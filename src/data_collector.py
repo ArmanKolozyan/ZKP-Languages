@@ -52,8 +52,8 @@ def analyse_repositories(search_term):
     url = f"{GITHUB_API_URL}/search/code?q={search_term}&per_page=100"
     repos = [] # result
     repo_names_set = set()  # to keep track of unique repository names
-    page = 0
-    
+    page = 1
+
     while True:
         
         response = requests.get(url + f"&page={page}", headers=headers)
