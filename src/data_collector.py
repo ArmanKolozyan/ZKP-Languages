@@ -109,6 +109,7 @@ def analyse_repositories(search_term):
 
                 # formatting the last updated datetime to only include the date
                 last_updated = repo_data.get("updated_at", "N/A").split("T")[0]
+                created_at = repo_data.get("created_at", "N/A").split("T")[0]
 
                 repos.append({
                     "Repository": repo_name,
@@ -116,6 +117,7 @@ def analyse_repositories(search_term):
                     "Forks": repo_data.get("forks_count", 0),
                     "Open Issues": repo_data.get("open_issues_count", 0),
                     "Total Issues": total_issues_count,
+                    "Created At": created_at,
                     "Last Updated": last_updated,
                     "Primary Language": repo_data.get("language", "N/A"),
                     "Contributors": num_contributors
