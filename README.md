@@ -56,7 +56,7 @@ The study utilized GitHub's API to search for repositories. Below are the specif
 | **ZoKrates**     | `filename:.zok`                 |
 | **Noir**         | `filename:nargo.toml`           |
 | **Cairo**        | `filename:scarb.toml`           |
-| **Leo**          | `filename:.leo`                 |
+| **Leo**          | `filename:program.json .aleo`   |
 | **Nexus VM**     | `nexus_rt`                      |
 | **RISC Zero**    | `risc0-build`                   |
 | **snarkVM**      | `snarkvm`                       |
