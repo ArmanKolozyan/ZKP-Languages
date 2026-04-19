@@ -2,6 +2,7 @@ import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 import time
+import os
 
 # GitHub personal access token
 GITHUB_TOKEN = "" # please put your token here!
@@ -12,6 +13,10 @@ headers = {
     "Authorization": f"token {GITHUB_TOKEN}",
     "Accept": "application/vnd.github.v3+json"
 }
+
+# resolve paths relative to this script's location
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+METRICS_FOLDER = os.path.join(SCRIPT_DIR, "..", "metrics")
 
 # helper function to scrape the number of contributors from a GitHub repository page
 def get_number_of_contributors(repo_name):
@@ -141,11 +146,8 @@ zkp_languages = {
 
 # function to collect data for all predefined ZKP languages
 # (creates CSV files in the metrics folder)
-def collect_all_zkp_data():    
-    # creating metrics folder
-    import os
-    folder = "../metrics"
-    os.makedirs(folder, exist_ok=True)
+def collect_all_zkp_data():
+    os.makedirs(METRICS_FOLDER, exist_ok=True)
 
     # collecting data for all languages
     for language_name, search_term in zkp_languages.items():
@@ -166,14 +168,14 @@ def collect_all_zkp_data():
             df = df.sort_values(by="Stars", ascending=False)
             
             # saving the DataFrame to a CSV file in the metrics folder
-            filename = f"{folder}/metrics_for_{language_name}.csv"
+            filename = os.path.join(METRICS_FOLDER, f"metrics_for_{language_name}.csv")
             df.to_csv(filename, index=False)
             
             print(f"✅ Data for {language_name}: {len(repositories)} repositories saved to {filename}")
         else:
             print(f"❌ No repositories found for {language_name}")
 
-    print(f"\n🎉 Data collection completed! All files saved in {folder}/")
+    print(f"\n🎉 Data collection completed! All files saved in {METRICS_FOLDER}/")
     print("Files created:")
     for language_name in zkp_languages.keys():
         print(f"  - metrics_for_{language_name}.csv")
